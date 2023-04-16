@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.team-info {
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.assignment {
+    background-color: lightgray;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.tbd {
+    background-color: #cccccc;
+}
