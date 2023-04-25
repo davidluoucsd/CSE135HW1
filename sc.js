@@ -1,6 +1,3 @@
-import LogRocket from 'logrocket';
-LogRocket.init('e8zsxt/cse135');
-
 document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll("section");
 
@@ -26,3 +23,4 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 });
+
