@@ -1,7 +1,8 @@
 
-LogRocket.init('e8zsxt/cse135');
 
+LogRocket.init('e8zsxt/cse135');
 document.addEventListener("DOMContentLoaded", () => {
+    
     const sections = document.querySelectorAll("section");
 
     const isInViewport = (element) => {
@@ -26,3 +27,20 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 });
+// This is an example script - don't forget to change it!
+LogRocket.identify('75', {
+    name: 'Junzhe Luo',
+    email: 'j5luo@ucsd.edu',
+  
+    // Add your own custom user variables here, ie:
+    subscriptionType: 'pro'
+  });
+
+  // This is an example script - don't forget to change it!
+LogRocket.identify('77', {
+    name: 'Lejia Zhang',
+    email: 'lez002@ucsd.edu',
+  
+    // Add your own custom user variables here, ie:
+    subscriptionType: 'pro'
+  });
