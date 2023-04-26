@@ -1,6 +1,4 @@
 
-
-LogRocket.init('e8zsxt/cse135');
 document.addEventListener("DOMContentLoaded", () => {
     
     const sections = document.querySelectorAll("section");
@@ -8,12 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const isInViewport = (element) => {
         const rect = element.getBoundingClientRect();
         return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.left <= (window.innerWidth || document.documentElement.clientWidth)
         );
     };
+    
 
     const handleScroll = () => {
         sections.forEach((section) => {
@@ -27,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 });
+LogRocket.init('e8zsxt/cse135');
 // This is an example script - don't forget to change it!
 LogRocket.identify('75', {
     name: 'Junzhe Luo',
