@@ -5,7 +5,10 @@ body {
     background-color: #f5f5f7;
     color: #1d1d1f;
 }
-
+#cookieConsentBanner {
+    padding: 20px;
+  }
+  
 header {
     position: sticky;
     top: 0;
