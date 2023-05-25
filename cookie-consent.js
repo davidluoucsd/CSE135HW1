@@ -1,18 +1,25 @@
 window.addEventListener("DOMContentLoaded", function() {
-  
-  var acceptCookies = localStorage.getItem("acceptCookies");
-  var cookieConsentBanner = document.getElementById("cookieConsentBanner");
+    // Check if the "acceptCookies" item is in local storage
+    var acceptCookies = localStorage.getItem("acceptCookies");
+    var cookieConsentBanner = document.getElementById("cookieConsentBanner");
 
-  if (!acceptCookies) {
+    if (acceptCookies === null) {
+        // If there is no "acceptCookies" item, show the banner
+        cookieConsentBanner.style.display = "block";
+    }
 
-    cookieConsentBanner.style.display = "block";
-  }
+    var cookieConsentAccept = document.getElementById("cookieConsentAccept");
+    var cookieConsentReject = document.getElementById("cookieConsentReject");
 
-  var cookieConsentButton = document.getElementById("cookieConsentButton");
+    cookieConsentAccept.addEventListener("click", function() {
+        // When the user clicks "Accept", hide the banner and store their choice in local storage
+        cookieConsentBanner.style.display = "none";
+        localStorage.setItem("acceptCookies", "yes");
+    });
 
-  cookieConsentButton.addEventListener("click", function() {
-
-    cookieConsentBanner.style.display = "none";
-    localStorage.setItem("acceptCookies", true);
-  });
+    cookieConsentReject.addEventListener("click", function() {
+        // When the user clicks "Reject", hide the banner and store their choice in local storage
+        cookieConsentBanner.style.display = "none";
+        localStorage.setItem("acceptCookies", "no");
+    });
 });
