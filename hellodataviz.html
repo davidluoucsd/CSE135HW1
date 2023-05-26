@@ -5,38 +5,40 @@
   <title>Hello Data Viz</title>
   <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 
-    
   <script>
     fetch('/api/static')
-      .then(response => response.json())
-      .then(data => {
-        var pageLoadTimeData = data.map(item => item.pageLoadTime);
-        var innerWidthData = data.map(item => item.InnerWidth);
-        var outerWidthData = data.map(item => item.OuterWidth);
+    .then(response => response.json())
+    .then(data => {
+        var startTimeData = data.map(item => item.pageLoadTiming.startTime);
+        var endTimeData = data.map(item => item.pageLoadTiming.loadEventEnd);
+        var domainLookupData = data.map(item => item.pageLoadTiming.domainLookupEnd);
+        var secureConnectionData = data.map(item => item.pageLoadTiming.secureConnectionStart);
 
         var myConfig = {
-          type: 'line',
-          title: {
-            text: 'Page Load Time, Inner and Outer Width for different Sessions',
-          },
-          scaleX: {
-            label: { text: 'Session ID' },
-            values: data.map((item) => item.ID),
-          },
-          scaleY: {
-            label: { text: 'Values' },
-          },
-          series: [
-            { values: pageLoadTimeData, text: 'Page Load Time' },
-            { values: innerWidthData, text: 'Inner Width' },
-            { values: outerWidthData, text: 'Outer Width' }
-          ]
+            type: 'line',
+            title: {
+                text: 'Start and End Time, Domain Lookup and Secure Connection for different Sessions',
+            },
+            scaleX: {
+                label: { text: 'Session ID' },
+                values: data.map((item) => item.sessionId),
+            },
+            scaleY: {
+                label: { text: 'Values' },
+            },
+            series: [
+                {values: startTimeData, text: 'Start Time'},
+                {values: endTimeData, text: 'End Time'},
+                {values: domainLookupData, text: 'Domain Lookup'},
+                {values: secureConnectionData, text: 'Secure Connection'}
+            ]
         };
         zingchart.render({
-          id: 'line-chart',
-          data: myConfig,
+            id: 'line-chart',
+            data: myConfig,
         });
-      });
+    });
+  </script>
 
     fetch('/api/static')
       .then(response => response.json())
