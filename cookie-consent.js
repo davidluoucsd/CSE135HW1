@@ -15,7 +15,9 @@ window.addEventListener("DOMContentLoaded", function() {
         // When the user clicks "Accept", hide the banner and store their choice in local storage
         cookieConsentBanner.style.display = "none";
         localStorage.setItem("acceptCookies", "yes");
+        setCookie('cookieConsent', 'yes', 30); 
     });
+    
 
     cookieConsentReject.addEventListener("click", function() {
         // When the user clicks "Reject", hide the banner and store their choice in local storage
