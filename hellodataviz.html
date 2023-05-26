@@ -84,8 +84,8 @@
     fetch('/api/static')
       .then(response => response.json())
       .then(data => {
-        var enabled = data.filter(item => item.cookieEnabled === 1).length;
-        var notEnabled = data.filter(item => item.cookieEnabled === 0).length;
+        var enabled = data.filter(item => item.CookieEnabled === 1).length;
+        var notEnabled = data.filter(item => item.CookieEnabled === 0).length;
 
         var myConfig = {
           type: 'pie',
@@ -117,6 +117,7 @@
           data: myConfig,
         });
       });
+
 
 
 
