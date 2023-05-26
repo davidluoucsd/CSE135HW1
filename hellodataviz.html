@@ -8,8 +8,11 @@
     .chart-container {
       height: 400px;
       width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
     }
-  </style>
+    </style>
+    
   <script>
     fetch('/api/static')
       .then(response => response.json())
