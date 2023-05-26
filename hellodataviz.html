@@ -1,72 +1,128 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Data Visualization</title>
+  <title>Hello Data Viz</title>
   <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <style>
+    .chart-container {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+  <script>
+    fetch('/api/static')
+    .then(response => response.json())
+    .then(data => {
+        var pageLoadTimeData = data.map(item => item.pageLoadTime);
+        var innerWidthData = data.map(item => item.InnerWidth);
+        var outerWidthData = data.map(item => item.OuterWidth);
 
+        var myConfig = {
+            type: 'line',
+            title: {
+                text: 'Page Load Time, Inner and Outer Width for different Sessions',
+            },
+            scaleX: {
+                label: { text: 'Session ID' },
+                values: data.map((item) => item.ID),
+            },
+            scaleY: {
+                label: { text: 'Values' },
+            },
+            series: [
+                {values: pageLoadTimeData, text: 'Page Load Time'},
+                {values: innerWidthData, text: 'Inner Width'},
+                {values: outerWidthData, text: 'Outer Width'}
+            ]
+        };
+        zingchart.render({
+            id: 'line-chart',
+            data: myConfig,
+        });
+    });
+
+    fetch('/api/static')
+    .then(response => response.json())
+    .then(data => {
+        var innerWidthData = data.map(item => item.InnerWidth);
+        var outerWidthData = data.map(item => item.OuterWidth);
+
+        var myConfig = {
+            type: 'bar',
+            plot: {
+                tooltip: {
+                    text: "Width: %v",
+                },
+                animation: {
+                    effect: "ANIMATION_SLIDE_BOTTOM"
+                },
+                barsOverlap: "100%",
+                borderRadius: 8,
+            },
+            title: {
+                text: 'Inner and Outer Width for Different Sessions',
+            },
+            scaleX: {
+                label: { text: 'Session ID' },
+                values: data.map((item) => item.ID),
+            },
+            scaleY: {
+                label: { text: 'Width' },
+            },
+            series: [
+                {values: innerWidthData, text: 'Inner Width'},
+                {values: outerWidthData, text: 'Outer Width'}
+            ]
+        };
+        zingchart.render({
+            id: 'bar-chart',
+            data: myConfig,
+        });
+    });
+
+    fetch('/api/static')
+.then(response => response.json())
+.then(data => {
+    var enabled = data.filter(item => item.cookieEnabled === 1).length;
+    var notEnabled = data.length - enabled;
+
+    var myConfig = {
+        type: 'pie',
+        title: {
+            text: 'Cookie Enabled vs Not Enabled',
+        },
+        plot: {
+            valueBox: {
+                text: '%t: %v (%npv%)',
+                placement: 'out',
+            },
+            tooltip: {
+                text: '%npv%',
+            },
+            animation: {
+                effect: 'ANIMATION_EXPAND_VERTICAL',
+                method: 'ANIMATION_STRONG_EASE_OUT',
+                sequence: 'ANIMATION_BY_PLOT_AND_NODE',
+                speed: 275,
+            },
+        },
+        series: [
+            {values: [enabled], text: "Cookie Enabled"},
+            {values: [notEnabled], text: "Cookie Not Enabled"}
+        ]
+    };
+    zingchart.render({
+        id: 'pie-chart',
+        data: myConfig,
+    });
+});
+
+
+  </script>
 </head>
 <body>
-  <div id="line-chart"></div>
-  <div id="bar-chart"></div>
-  <div id="pie-chart"></div>
-
-  <script>
-    // 3-series line chart
-    zingchart.render({
-      id: 'line-chart',
-      data: {
-        type: 'line',
-        series: [
-          { values: [32, 45, 38, 58, 62, 80] },
-          { values: [25, 35, 45, 55, 65, 75] },
-          { values: [10, 20, 30, 40, 50, 60] },
-        ],
-      },
-    });
-
-    // 2-series bar chart
-    zingchart.render({
-      id: 'bar-chart',
-      data: {
-        type: 'bar',
-        series: [
-          { values: [35, 42, 67, 89, 25, 34] },
-          { values: [28, 57, 43, 56, 78, 99] },
-        ],
-      },
-    });
-
-    // Pie chart
-    zingchart.render({
-      id: 'pie-chart',
-      data: {
-        type: 'pie',
-        series: [
-          { values: [20], text: 'A' },
-          { values: [30], text: 'B' },
-          { values: [50], text: 'C' },
-        ],
-      },
-    });
-
-    // Fetch real data from your API and update the charts
-    fetch('/api/static')
-      .then((response) => response.json())
-      .then((data) => {
-        // Process the data as needed for the chart
-        const seriesData = data.map((item) => {
-          return { values: item.values };
-        });
-
-        // Update the line chart with real data
-        ZingChart.exec('line-chart', 'setseriesdata', {
-          data: seriesData,
-        });
-      });
-  </script>
+  <div id="line-chart" class="chart-container"></div>
+  <div id="bar-chart" class="chart-container"></div>
+  <div id="pie-chart" class="chart-container"></div>
 </body>
 </html>
-
