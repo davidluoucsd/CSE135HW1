@@ -6,31 +6,35 @@
   <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 
   <script>
-    fetch('/api/static')
+fetch('/api/static')
     .then(response => response.json())
     .then(data => {
-        var startTimeData = data.map(item => item.pageLoadTiming.startTime);
-        var endTimeData = data.map(item => item.pageLoadTiming.loadEventEnd);
-        var domainLookupData = data.map(item => item.pageLoadTiming.domainLookupEnd);
-        var secureConnectionData = data.map(item => item.pageLoadTiming.secureConnectionStart);
+        var connectEndData = data.map(item => item.pageLoadTiming ? item.pageLoadTiming.connectEnd : null);
+        var fetchStartData = data.map(item => item.pageLoadTiming ? item.pageLoadTiming.fetchStart : null);
+        var responseEndData = data.map(item => item.pageLoadTiming ? item.pageLoadTiming.responseEnd : null);
 
         var myConfig = {
             type: 'line',
             title: {
-                text: 'Start and End Time, Domain Lookup and Secure Connection for different Sessions',
+                text: 'Connect End, Fetch Start, and Response End for different Sessions',
             },
             scaleX: {
                 label: { text: 'Session ID' },
-                values: data.map((item) => item.sessionId),
+                values: data.map((item) => {
+                    if (item.pageLoadTiming) {
+                        return `${item.sessionId}\nDuration: ${item.pageLoadTiming.duration}\nRedirect Count: ${item.pageLoadTiming.redirectCount}\nResponse Status: ${item.pageLoadTiming.responseStatus}`;
+                    } else {
+                        return item.sessionId;
+                    }
+                }),
             },
             scaleY: {
                 label: { text: 'Values' },
             },
             series: [
-                {values: startTimeData, text: 'Start Time'},
-                {values: endTimeData, text: 'End Time'},
-                {values: domainLookupData, text: 'Domain Lookup'},
-                {values: secureConnectionData, text: 'Secure Connection'}
+                {values: connectEndData, text: 'Connect End'},
+                {values: fetchStartData, text: 'Fetch Start'},
+                {values: responseEndData, text: 'Response End'}
             ]
         };
         zingchart.render({
@@ -38,6 +42,8 @@
             data: myConfig,
         });
     });
+
+
 
     fetch('/api/static')
       .then(response => response.json())
